@@ -1,5 +1,6 @@
 'use strict'
 // BUTTON - PAGE
+
 function toLoginPage () {
     $('#section-message').empty() ;
     $("#page-home").hide();
@@ -42,7 +43,6 @@ function toHomePage() {
         $("#btn-logout").show();
     } else {
         $('#section-message').empty() ;
-        $('#section-list').hide() ;
         $("#page-home").show();
         $("#page-dashboard").hide();
         $("#page-createplan").hide();
@@ -54,6 +54,38 @@ function toHomePage() {
         $("#btn-logout").hide();
     }
 }
+
+function toCreatePlanPage () {
+    $('#section-message').empty() ;
+    $("#page-home").hide();
+    $("#page-dashboard").hide();
+    $("#page-createplan").show();
+    $("#page-updateplan").hide();
+    $("#page-login").hide();
+    $("#page-register").hide();
+    $("#btn-login").hide();
+    $("#btn-register").hide();
+    $("#btn-logout").hide();
+}
+
+function logout(){
+    localStorage.clear()
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+    $('#section-message').empty() ;
+    $("#page-home").show();
+    $("#page-dashboard").hide();
+    $("#page-createplan").hide();
+    $("#page-updateplan").hide();
+    $("#page-login").hide();
+    $("#page-register").hide();
+    $("#btn-login").show();
+    $("#btn-register").show();
+    $("#btn-logout").hide();
+}
+
 
 
 
@@ -132,6 +164,42 @@ function login(event) {
 }
 
 
+function createPlan (event) {
+    $('#section-message').empty() ;
+    event.preventDefault();
+    const name = $('#name-create').val();
+    const goal = $('#goal-create').val() || "" ;
+    const cooking_date = $('#cooking_date-create').val();
+
+    // $.ajax({
+    //     method : "POST",
+    //     url : 'http://localhost:3000/cookplans/',
+    //     headers : {
+    //         token : localStorage.getItem('token')
+    //     },
+    //     data : {
+    //         name,
+    //         goal,
+    //         cooking_date
+    //     }  
+    // })
+    //     .done ((response) => {
+    //         $('#section-message').empty() ;
+    //         $("#page-home").hide();
+    //         $("#page-dashboard").show();
+    //         $("#page-createplan").hide();
+    //         $("#page-updateplan").hide();
+    //         $("#page-login").hide();
+    //         $("#page-register").hide();
+    //         $("#btn-login").hide();
+    //         $("#btn-register").hide();
+    //         $("#btn-logout").show();
+    //     })
+
+    //     .fail ((err) => {
+    //         showMessage(err.responseJSON.message)
+    //     })
+}
 
 
 $(document).ready (function(){
@@ -150,10 +218,9 @@ $(document).ready (function(){
         $("#btn-register").hide();
         $("#btn-logout").show();
     } else {
-        $('#section-message').empty() ;
-        $('#section-list').hide() ;
+        $('#section-message').empty() ;;
         $("#page-home").show();
-        $("#page-dashboard").hide();
+        $("#page-dashboard").show(); // jangan lupa dibalikin jadi hide 
         $("#page-createplan").hide();
         $("#page-updateplan").hide();
         $("#page-login").hide();

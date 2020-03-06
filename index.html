@@ -43,6 +43,7 @@
     </section>
     <section id="page-dashboard">
         <h1>dashboard page</h1>
+        <button onclick="toCreatePlanPage()">Create Plan</button>
     </section>
     <section id="page-login">
         <h1>Login Form</h1>
@@ -65,10 +66,22 @@
         </form>
     </section>
     <section id="page-createplan">
-        <h1>create plan</h1>
+        <h1>Let's Create New Plan</h1>
+        <form onsubmit="createPlan(event)" style="width: 50%; text-align: left; margin: auto;" >
+            <label for="name-create">Food Name :</label><br>
+            <input type="text" id="name-create" name="name-create" placeholder="Food Name"><br>
+            <label for="goal-create">Goal :</label><br>
+            <input type="text" id="goal-create" name="goal-create" placeholder="Goal"><br>
+            <label for="cooking_date-create">Cooking Date :</label><br>
+            <input type="date" id="cooking_date-create" name="cooking_date-create" placeholder="Cooking Date"><br><br>
+            <input type="submit" value="Submit">
+        </form>
     </section>
     <section id="page-updateplan">
         <h1>update plan</h1>
+    </section>
+    <section>
+
     </section>
     <section id="section-message">
     </section><br>
