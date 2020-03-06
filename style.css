@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Gochi+Hand&display=swap');
+
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('https://images.unsplash.com/photo-1546548970-71785318a17b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80')
+      no-repeat center/100%;
+  background-size: cover;
+  font-family: 'Muli', sans-serif;
+  color: whitesmoke;
+}
+
+#page-home {
+  text-align: center;
+  color: #ccc;
+  margin-top: 6%;
+}
+
+#whenRegister {
+  width: 40%;
+  margin: auto;
+  padding: 1.5rem;
+  border-radius: 15px;
+  /* border: 1px solid rgba(204, 204, 204, 0.384);
+  background-color: black; */
+}
+
+#whenLogin {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+
+#whenLogin button {
+  margin: 0.5rem 0;
+}
+
+#page-home h1,
+#page-home span {
+  font-family: 'Gochi Hand', cursive;
+  padding: 0;
+  margin: 0;
+}
+
+#page-home h1 {
+  font-size: 7rem;
+  color: goldenrod;
+}
+
+#page-home span {
+  font-size: 4rem;
+}
+
+#registerMessage h5 {
+  padding: 0.5rem 1.5rem;
+  color: #ccc;
+}
+
+/* Full-width input fields */
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  /* width: 100%; */
+}
