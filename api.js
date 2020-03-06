@@ -30,7 +30,10 @@ const fetchCookingPlans = () => {
         headers: {
             token: localStorage.getItem('token')
         },
-        url: `${URL}/cookplans`
+        url: `${URL}/cookplans`,
+        data: {
+            name, goal, cooking_date
+        }
     })
 }
 
@@ -49,6 +52,8 @@ const addCookingPlans = (payload) => {
     })
 }
 
+/*
+
 const logOut = () => {
     return localStorage.removeItem('token')
 }
@@ -61,3 +66,5 @@ const logOut = () => {
         localStorage.removeItem('token');
     })
 }
+
+*/

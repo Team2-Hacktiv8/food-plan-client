@@ -54,6 +54,11 @@ body {
   font-size: 4rem;
 }
 
+#registerMessage h5 {
+  padding: 0.5rem 1.5rem;
+  color: #ccc;
+}
+
 /* Full-width input fields */
 input[type='text'],
 input[type='password'] {

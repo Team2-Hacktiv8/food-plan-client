@@ -24,6 +24,7 @@ function onSignIn(googleUser) {
 /* Logout Google */
 
 function signOut() {
+    localStorage.clear()
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');
@@ -36,11 +37,46 @@ function signOut() {
 const defaultView = () => {
     $('#whenLogin').hide();
     $('#btn-logout').hide();
+    $('#registerMessage').hide();
+}
+
+const whenRegisterSuccess = () => {
+    $('#registerMessage').show();
+    let string = "<h5> Register Success! </h5>"
+    $('#registerMessage').html(string);
+}
+
+const whenRegisterFailed = () => {
+    $('#registerMessage').show();
+    let string = "<h5> Register Failed! </h5>"
+    $('#registerMessage').html(string);
+}
+
+const whenLoginFailed = () => {
+    $('#registerMessage').show();
+    let string = "<h5> Login Failed! </h5>"
+    $('#registerMessage').html(string);
 }
 
 const whenIsLogin = () => {
+    $('#registerMessage').show();
+    let string = "<h5> Welcome! </h5>"
+    $('#registerMessage').html(string);
     $('#whenLogin').show();
     $('#btn-logout').show();
+}
+
+const whenCreateSuccess = () => {
+    $('#registerMessage').show();
+    let string = "<h5> Cooking Plan Added! </h5>"
+    $('#registerMessage').html(string);
+    $('#whenLogin').show();
+    $('#btn-logout').show();
+}
+
+const clearInput = () => {
+    $('#email-register').val('');
+    $('#password-register').val('')
 }
 
 
@@ -56,236 +92,87 @@ $(document).ready(function () {
         whenIsLogin();
     }
 
+    /* Register Process */
+    const register = (event) => {
+        event.preventDefault();
+        const payload = {
+            email: $('#email-register').val(),
+            password: $('#password-register').val()
+        }
+        register(payload).done(response => {
+            whenRegisterSuccess();
+            clearInput();
+        }).fail(err => {
+            whenRegisterFailed();
+        })
+    }
+
+    /* Login Process */
+
+    const login = (event) => {
+        event.preventDefault();
+        const payload = {
+            email: $('#email-login').val(),
+            password: $('#password-login').val()
+        }
+
+        login(payload).done(response => {
+            const token = response.token;
+            localStorage.setItem('token', token)
+            whenIsLogin();
+        }).fail(err => {
+            whenLoginFailed();
+        })
+
+    }
+
+    /* Create Cooking Plan */
+
+    const createPlan = (event) => {
+        $('#section-message').empty();
+        event.preventDefault();
+        const payload = {
+            name: $('#name-create').val(),
+            goal: $('#goal-create').val() || "",
+            cooking_date: $('#cooking_date-create').val()
+        };
+        addCookingPlans(payload).done(response => {
+
+        }).fail(err => {
+            whenIsLogin();
+        })
+
+    }
+
+    /* Fetching All Plans */
+    const fetchCookPlans = () => {
+
+        fetchCookingPlans().done(response => {
+            $('.card-container').empty();
+            response.data.forEach(element => {
+                let cooking_date = new Date(element.cooking_date)
+                let year = cooking_date.getFullYear();
+                let month = cooking_date.getMonth() + 1;
+                let day = cooking_date.getDate() + 1;
+
+                if (month < 10) {
+                    month = `0${month}`
+                }
+                if (day < 10) {
+                    day = `0${day}`
+                }
+                let formatted_date = day + "-" + month + "-" + year;
+
+                $('.card-container').append(`
+                <div class="card-todo" id=card-${element.id}>
+                    ${element.name}<br>
+                    ${element.goals}<br>
+                    ${formatted_date}<br>
+                    <a href="${elemement.recipe_link}">Get Receipe</a>
+                    <a href="${elemement.video_link}">Too lazy to cook? get restaurant recommendation</a><br><br><br>
+                    <button class="btn btn-danger" onClick="deleteTodo(${element.id})" id="btn-delete-${element.id}">Delete</button></div>`)
+            });
+        }).fail()
+
+    }
 })
-
-
-
-// function toLoginPage() {
-//     $('#section-message').empty();
-//     $("#page-home").hide();
-//     $("#page-dashboard").hide();
-//     $("#page-createplan").hide();
-//     $("#page-updateplan").hide();
-//     $("#page-login").show();
-//     $("#page-register").hide();
-//     $("#btn-login").hide();
-//     $("#btn-register").hide();
-//     $("#btn-logout").hide();
-// }
-
-// function toRegistrationPage() {
-//     $('#section-message').empty();
-//     $("#page-home").hide();
-//     $("#page-dashboard").hide();
-//     $("#page-createplan").hide();
-//     $("#page-updateplan").hide();
-//     $("#page-login").hide();
-//     $("#page-register").show();
-//     $("#btn-login").hide();
-//     $("#btn-register").hide();
-//     $("#btn-logout").hide();
-// }
-
-// function toHomePage() {
-//     const token = localStorage.getItem('token');
-
-//     if (token) {
-//         $('#section-message').empty();
-//         $("#page-home").hide();
-//         $("#page-dashboard").show();
-//         $("#page-createplan").hide();
-//         $("#page-updateplan").hide();
-//         $("#page-login").hide();
-//         $("#page-register").hide();
-//         $("#btn-login").hide();
-//         $("#btn-register").hide();
-//         $("#btn-logout").show();
-//     } else {
-//         $('#section-message').empty();
-//         $("#page-home").show();
-//         $("#page-dashboard").hide();
-//         $("#page-createplan").hide();
-//         $("#page-updateplan").hide();
-//         $("#page-login").hide();
-//         $("#page-register").hide();
-//         $("#btn-login").show();
-//         $("#btn-register").show();
-//         $("#btn-logout").hide();
-//     }
-// }
-
-// function toCreatePlanPage() {
-//     $('#section-message').empty();
-//     $("#page-home").hide();
-//     $("#page-dashboard").hide();
-//     $("#page-createplan").show();
-//     $("#page-updateplan").hide();
-//     $("#page-login").hide();
-//     $("#page-register").hide();
-//     $("#btn-login").hide();
-//     $("#btn-register").hide();
-//     $("#btn-logout").hide();
-// }
-
-// function logout() {
-//     localStorage.clear()
-//     var auth2 = gapi.auth2.getAuthInstance();
-//     auth2.signOut().then(function () {
-//         console.log('User signed out.');
-//     });
-//     $('#section-message').empty();
-//     $("#page-home").show();
-//     $("#page-dashboard").hide();
-//     $("#page-createplan").hide();
-//     $("#page-updateplan").hide();
-//     $("#page-login").hide();
-//     $("#page-register").hide();
-//     $("#btn-login").show();
-//     $("#btn-register").show();
-//     $("#btn-logout").hide();
-// }
-
-
-
-
-// // SUBMISSION
-
-// function register(event) {
-//     event.preventDefault();
-//     const email = $('#email-register').val();
-//     const password = $('#password-register').val();
-
-//     console.log(email, password);
-
-//     // $('#email-register').val('');
-//     // $('#password-register').val('')
-
-//     // $.ajax({
-//     //     method : 'POST',
-//     //     url : 'http://localhost:3000/users/register',
-//     //     data : {
-//     //         email,
-//     //         password
-//     //     }
-//     // })
-//     //     .done(function (response) {
-//     //         showMessage(['Signed up success'])
-//     //         $('#section-message').empty() ;
-//     //         $("#page-home").hide();
-//     //         $("#page-dashboard").hide();
-//     //         $("#page-createplan").hide();
-//     //         $("#page-updateplan").hide();
-//     //         $("#page-login").show();
-//     //         $("#page-register").hide();
-//     //         $("#btn-login").hide();
-//     //         $("#btn-register").hide();
-//     //         $("#btn-logout").hide();
-//     //     })
-//     //     .fail(function (err) {
-//     //         showMessage(err.responseJSON.message)
-//     //     })
-// }
-
-// function login(event) {
-//     event.preventDefault();
-//     const email = $('#email-login').val();
-//     const password = $('#password-login').val();
-
-//     console.log(email, password);
-
-//     // $('#email-login').val('');
-//     // $('#password-login').val('')
-
-//     // $.ajax({
-//     //     method : 'POST',
-//     //     url : 'http://localhost:3000/users/login',
-//     //     data : {
-//     //         email,
-//     //         password
-//     //     }
-//     // })
-//     //     .done(function (response) {
-//     //         showMessage(['Signed up success'])
-//     //         $('#section-message').empty() ;
-//     //         $("#page-home").hide();
-//     //         $("#page-dashboard").show();
-//     //         $("#page-createplan").hide();
-//     //         $("#page-updateplan").hide();
-//     //         $("#page-login").hide();
-//     //         $("#page-register").hide();
-//     //         $("#btn-login").hide();
-//     //         $("#btn-register").hide();
-//     //         $("#btn-logout").show();
-//     //     })
-//     //     .fail(function (err) {
-//     //         showMessage(err.responseJSON.message)
-//     //     })
-// }
-
-
-// function createPlan(event) {
-//     $('#section-message').empty();
-//     event.preventDefault();
-//     const name = $('#name-create').val();
-//     const goal = $('#goal-create').val() || "";
-//     const cooking_date = $('#cooking_date-create').val();
-
-//     // $.ajax({
-//     //     method : "POST",
-//     //     url : 'http://localhost:3000/cookplans/',
-//     //     headers : {
-//     //         token : localStorage.getItem('token')
-//     //     },
-//     //     data : {
-//     //         name,
-//     //         goal,
-//     //         cooking_date
-//     //     }  
-//     // })
-//     //     .done ((response) => {
-//     //         $('#section-message').empty() ;
-//     //         $("#page-home").hide();
-//     //         $("#page-dashboard").show();
-//     //         $("#page-createplan").hide();
-//     //         $("#page-updateplan").hide();
-//     //         $("#page-login").hide();
-//     //         $("#page-register").hide();
-//     //         $("#btn-login").hide();
-//     //         $("#btn-register").hide();
-//     //         $("#btn-logout").show();
-//     //     })
-
-//     //     .fail ((err) => {
-//     //         showMessage(err.responseJSON.message)
-//     //     })
-// }
-
-
-// // $(document).ready(function () {
-
-// //      
-
-// //     if (token) {
-// //         $('#section-message').empty();
-// //         $("#page-home").hide();
-// //         $("#page-dashboard").show();
-// //         $("#page-createplan").hide();
-// //         $("#page-updateplan").hide();
-// //         $("#page-login").hide();
-// //         $("#page-register").hide();
-// //         $("#btn-login").hide();
-// //         $("#btn-register").hide();
-// //         $("#btn-logout").show();
-// //     } else {
-// //         $('#section-message').empty();;
-// //         $("#page-home").show();
-// //         $("#page-dashboard").show(); // jangan lupa dibalikin jadi hide 
-// //         $("#page-createplan").hide();
-// //         $("#page-updateplan").hide();
-// //         $("#page-login").hide();
-// //         $("#page-register").hide();
-// //         $("#btn-login").show();
-// //         $("#btn-register").show();
-// //         $("#btn-logout").hide();
-// //     }
-// // })
