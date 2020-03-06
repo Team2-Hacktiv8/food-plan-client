@@ -1,8 +1,10 @@
 'use strict'
 // BUTTON - PAGE
 
-function toLoginPage () {
-    $('#section-message').empty() ;
+$('#createBtnOnLogin').hide();
+
+function toLoginPage() {
+    $('#section-message').empty();
     $("#page-home").hide();
     $("#page-dashboard").hide();
     $("#page-createplan").hide();
@@ -14,8 +16,8 @@ function toLoginPage () {
     $("#btn-logout").hide();
 }
 
-function toRegistrationPage () {
-    $('#section-message').empty() ;
+function toRegistrationPage() {
+    $('#section-message').empty();
     $("#page-home").hide();
     $("#page-dashboard").hide();
     $("#page-createplan").hide();
@@ -28,10 +30,10 @@ function toRegistrationPage () {
 }
 
 function toHomePage() {
-    const token = localStorage.getItem('token') ;
+    const token = localStorage.getItem('token');
 
     if (token) {
-        $('#section-message').empty() ;
+        $('#section-message').empty();
         $("#page-home").hide();
         $("#page-dashboard").show();
         $("#page-createplan").hide();
@@ -42,7 +44,7 @@ function toHomePage() {
         $("#btn-register").hide();
         $("#btn-logout").show();
     } else {
-        $('#section-message').empty() ;
+        $('#section-message').empty();
         $("#page-home").show();
         $("#page-dashboard").hide();
         $("#page-createplan").hide();
@@ -55,8 +57,8 @@ function toHomePage() {
     }
 }
 
-function toCreatePlanPage () {
-    $('#section-message').empty() ;
+function toCreatePlanPage() {
+    $('#section-message').empty();
     $("#page-home").hide();
     $("#page-dashboard").hide();
     $("#page-createplan").show();
@@ -68,13 +70,13 @@ function toCreatePlanPage () {
     $("#btn-logout").hide();
 }
 
-function logout(){
+function logout() {
     localStorage.clear()
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');
     });
-    $('#section-message').empty() ;
+    $('#section-message').empty();
     $("#page-home").show();
     $("#page-dashboard").hide();
     $("#page-createplan").hide();
@@ -92,11 +94,11 @@ function logout(){
 // SUBMISSION
 
 function register(event) {
-    event.preventDefault() ;
+    event.preventDefault();
     const email = $('#email-register').val();
-    const password = $('#password-register').val() ;
+    const password = $('#password-register').val();
 
-    console.log(email , password);
+    console.log(email, password);
 
     // $('#email-register').val('');
     // $('#password-register').val('')
@@ -128,11 +130,11 @@ function register(event) {
 }
 
 function login(event) {
-    event.preventDefault() ;
+    event.preventDefault();
     const email = $('#email-login').val();
-    const password = $('#password-login').val() ;
+    const password = $('#password-login').val();
 
-    console.log(email , password);
+    console.log(email, password);
 
     // $('#email-login').val('');
     // $('#password-login').val('')
@@ -164,11 +166,11 @@ function login(event) {
 }
 
 
-function createPlan (event) {
-    $('#section-message').empty() ;
+function createPlan(event) {
+    $('#section-message').empty();
     event.preventDefault();
     const name = $('#name-create').val();
-    const goal = $('#goal-create').val() || "" ;
+    const goal = $('#goal-create').val() || "";
     const cooking_date = $('#cooking_date-create').val();
 
     // $.ajax({
@@ -202,12 +204,12 @@ function createPlan (event) {
 }
 
 
-$(document).ready (function(){
+$(document).ready(function () {
 
-    const token = localStorage.getItem('token') ;
+    const token = localStorage.getItem('token');
 
     if (token) {
-        $('#section-message').empty() ;
+        $('#section-message').empty();
         $("#page-home").hide();
         $("#page-dashboard").show();
         $("#page-createplan").hide();
@@ -218,7 +220,7 @@ $(document).ready (function(){
         $("#btn-register").hide();
         $("#btn-logout").show();
     } else {
-        $('#section-message').empty() ;;
+        $('#section-message').empty();;
         $("#page-home").show();
         $("#page-dashboard").show(); // jangan lupa dibalikin jadi hide 
         $("#page-createplan").hide();
@@ -228,5 +230,5 @@ $(document).ready (function(){
         $("#btn-login").show();
         $("#btn-register").show();
         $("#btn-logout").hide();
-    }    
+    }
 })
