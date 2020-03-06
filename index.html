@@ -23,7 +23,7 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
                 <li id="btn-register" style="padding: 2px;" class="nav-item">
-                    <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#modalRegister">Register</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalRegister">Register</button>
                     <!-- <button type="button" class="btn btn-outline-light" onclick="toRegistrationPage()">Register</button> -->
                 </li>
                 <li id="btn-login" style="padding: 2px;" class="nav-item">
@@ -93,14 +93,47 @@
         </div>
     </div>
 
+    <!-- Modal Create -->
+
+    <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="modalCreateTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCreateTitle">CREATE PLAN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="createPlan(event)" style="width: 50%; text-align: left; margin: auto;">
+                        <label for="name-create">Food Name :</label><br>
+                        <input type="text" id="name-create" name="name-create" placeholder="Food Name"><br>
+                        <label for="goal-create">Goal :</label><br>
+                        <input type="text" id="goal-create" name="goal-create" placeholder="Goal"><br>
+                        <label for="cooking_date-create">Cooking Date :</label><br>
+                        <input type="date" id="cooking_date-create" name="cooking_date-create" placeholder="Cooking Date"><br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Landing Page -->
     <main id="page-home">
         <div>
             <h1>ME:COOK</h1>
             <span>PLANNER</span>
-            <div>
-                <button id="createBtnOnRegister" type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#modalRegister">CREATE PLAN</button>
-                <button id="createBtnOnLogin" type="button" class="btn btn-outline-light">CREATE PLAN</button>
+            <div id="whenRegister">
+                <button id="createBtnOnRegister" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalRegister">CREATE PLAN</button>
+            </div>
+            <div id="whenLogin">
+                <button id="createBtnOnLogin" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCreate">CREATE PLAN</button>
+                <button id="createBtnOnLogin" type="button" class="btn btn-danger">Check Your Cooking Plan</button>
             </div>
         </div>
     </main>
@@ -129,7 +162,7 @@
             <input type="submit" value="Submit">
         </form>
     </section> -->
-    <section id="page-createplan">
+    <!-- <section id="page-createplan">
         <h1>Let's Create New Plan</h1>
         <form onsubmit="createPlan(event)" style="width: 50%; text-align: left; margin: auto;">
             <label for="name-create">Food Name :</label><br>
@@ -140,7 +173,7 @@
             <input type="date" id="cooking_date-create" name="cooking_date-create" placeholder="Cooking Date"><br><br>
             <input type="submit" value="Submit">
         </form>
-    </section>
+    </section> -->
     <section id="page-updateplan">
         <h1>update plan</h1>
     </section>
